@@ -1,7 +1,8 @@
 import datetime as dt
-import pymongo
-from tkinter import *
 import tkinter.ttk as ttk
+from tkinter import *
+
+import pymongo
 
 
 def get_mongo():

@@ -1,9 +1,10 @@
-from tkinter import *
-import tkinter.ttk as ttk
 import datetime as dt
-import pymongo
+import tkinter.ttk as ttk
+from tkinter import *
+
 import numpy as np
 import pandas as pd
+import pymongo
 
 
 def get_mongo():

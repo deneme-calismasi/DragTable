@@ -1,5 +1,5 @@
-from tkinter import *
 import datetime as dt
+from tkinter import *
 
 
 def drag_start(event):

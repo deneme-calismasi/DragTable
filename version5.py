@@ -1,5 +1,6 @@
-from tkinter import *
 import datetime as dt
+from tkinter import *
+
 import pymongo
 
 

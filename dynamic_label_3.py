@@ -1,5 +1,5 @@
-from tkinter import *
 import tkinter.ttk as ttk
+from tkinter import *
 
 master = Tk()
 data2 = ['Orange', 'Apple', 'Banana', 'Kiwi']

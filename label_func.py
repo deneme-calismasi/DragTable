@@ -1,5 +1,5 @@
-from tkinter import *
 import time
+from tkinter import *
 
 root = Tk()
 root.title("Tarea Programada 2")
