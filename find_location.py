@@ -13,8 +13,8 @@ def fire_here(x, y):
     print("column:{}, row:{}".format(x, y))
 
 
-for r in range(1, 11):
-    for c in range(1, 11):
+for r in range(1, 13):
+    for c in range(1, 13):
         coord = str(r) + "_" + str(c)
         COORDS_LIST.append(coord)
 

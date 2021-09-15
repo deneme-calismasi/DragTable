@@ -9,7 +9,7 @@ def new():
 
 root = Tk()
 root.title("GUI Test Version 2")
-root.resizable(False, False)
+# root.resizable(False, False)
 root.geometry('{}x{}'.format(400, 400))
 menu = Menu(root)
 root.config(menu=menu)
@@ -35,13 +35,13 @@ class App(object):
         self.txt_frm = Frame(self.root, width=900, height=900)
         self.txt_frm.pack(fill="both", expand=True)
 
-        button1 = Button(self.txt_frm, text="HELLO", command=self.hello_world)
-        button1.grid(column=0, row=2, padx=2, pady=2)
-        button1.bind("<Button-1>", self.drag_start)
-        button1.bind("<B1-Motion>", self.drag_motion)
+        self.button1 = Button(self.txt_frm, text="HELLO", command=self.hello_world)
+        self.button1.grid(column=0, row=2, padx=2, pady=2)
+        self.button1.bind("<Button-1>", self.drag_start)
+        self.button1.bind("<B1-Motion>", self.drag_motion)
 
         self.label = Label(self.txt_frm, text='')
-        self.label.grid(column=1, row=3)
+
         self.label.bind("<Button-1>", self.drag_start)
         self.label.bind("<B1-Motion>", self.drag_motion)
 
@@ -59,11 +59,22 @@ class App(object):
         y = widget.winfo_y() - widget.startY + event.y
         widget.place(x=x, y=y)
 
+    def do_popup_x(self):
+        x = self.button1.winfo_rootx()
+        print("x= ", x)
+        return x
+
+    def do_popup_y(self):
+        y = self.button1.winfo_rooty()
+        print("y= ", y)
+        return y
+
     def fire_here(self, x, y):
         print("column:{}, row:{}".format(x, y))
 
     def update_btn_text(self):
         x = random.randint(0, 100)
+        self.label.place(x=(self.do_popup_x() + 10), y=(self.do_popup_y() - 65))
         return x
 
 
