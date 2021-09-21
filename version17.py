@@ -92,6 +92,7 @@ for index, dat in enumerate(sensor_no):
 for name in sensor_no:
     print(name, button_dict[name])  # prints all button/name associations
     print(name, label_dict[name])
+    print(type(name))
 
 # get_mongo()
 root.mainloop()

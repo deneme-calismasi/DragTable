@@ -6,6 +6,10 @@ import pandas as pd
 import pymongo
 import random
 
+root = Tk()
+root.geometry("800x600")
+root.state('zoomed')
+
 
 def get_mongo():
     global get_data
@@ -17,6 +21,11 @@ def get_mongo():
 
     print(documents)
     return documents
+
+
+def random_func():
+    txt = random.randint(0, 100)
+    return txt
 
 
 def drag_start(event):
@@ -50,53 +59,48 @@ def button_place():
     label.place(x=(do_popup_x() + 10), y=(do_popup_y() - 65))
 
 
-def random_func():
-    txt = random.randint(0, 100)
-    return txt
-
-
 def time_func():
     time_data = dt.datetime.now().strftime('%Y-%m-%d %X')
     return time_data
 
 
-root = Tk()
-root.title("DragTable")
-root.geometry("800x600")
-root.state('zoomed')
-
 data2 = get_mongo()
+
 df = pd.DataFrame.from_records(data2)
 
 sensor_no = np.array(df['Sensor No'])
-button_dict = {}
-label_dict = {}
 
-button = []
+# print(sensor_no)
+
+str1 = ''.join(sensor_no)
+
+new_lst_1 = list(str(str1))
+
+# print(list(str(str1)))
+
+new_lst_2 = list(map(int, new_lst_1))
+print(new_lst_2)
+
+# print(new_lst)
+# for _position, _value in enumerate(sensor_no):
+#     try:
+#         _new_value = float(_value)
+#     except ValueError:
+#         _new_value = 0.0
+#     sensor_no[_position] = _new_value
 
 
-def callback_function(func_var):
-    button_place()
-    print('Pressed:', func_var)
+files = []  # creates list to replace your actual inputs for troubleshooting purposes
+button = []  # creates list to store the buttons ins
 
+for i in range(len(new_lst_2)):
+    files.append("Button " + str(i + 1))
 
-for i in range(len(button)):  # this just popultes a list as a replacement for your actual inputs for troubleshooting purposes
+for i in range(len(new_lst_2)):
+    button.append(Button(root, text=files[i], command=lambda c=i: print(button[c].cget("text"))))
+    button[i].pack()  # this packs the buttons
 
-    for index, dat, in enumerate(sensor_no):
-        button.append(Button(root, text=dat, bg="red", fg="white", command=lambda dat=dat: callback_function(dat)))
-        # button[i].pack()  # this packs the buttons
-        button[i].pack()
-        button_dict[dat] = button[i]  # Stores a reference to the button under
-        # the name from the database
+    button[i].bind("<Button-1>", drag_start)
+    button[i].bind("<B1-Motion>", drag_motion)
 
-        # label_dict[dat] = label
-        button[i].bind("<Button-1>", drag_start)
-        button[i].bind("<B1-Motion>", drag_motion)
-        print(button[i])
-
-# for name in sensor_no:
-#     print(name, button_dict[name])  # prints all button/name associations
-#     # print(name, label_dict[name])
-
-# get_mongo()
 root.mainloop()

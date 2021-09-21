@@ -33,20 +33,25 @@ def drag_motion(event):
 
 
 def do_popup_x():
-    x = button.winfo_rootx()
+    x = button[i].winfo_rootx()
     print("x= ", x)
     return x
 
 
 def do_popup_y():
-    y = button.winfo_rooty()
+    y = button[i].winfo_rooty()
     print("y= ", y)
     return y
 
 
-def update_btn_text():
-    txt = random.randint(0, 100)
+def button_place():
+    label = Label(root, text=random_func(), bg="black", fg="blue")
+    label.grid(row=do_popup_x(), column=do_popup_y(), pady=1, padx=1)
     label.place(x=(do_popup_x() + 10), y=(do_popup_y() - 65))
+
+
+def random_func():
+    txt = random.randint(0, 100)
     return txt
 
 
@@ -64,31 +69,44 @@ data2 = get_mongo()
 df = pd.DataFrame.from_records(data2)
 
 sensor_no = np.array(df['Sensor No'])
+
+# print(sensor_no)
+
+str1 = ''.join(sensor_no)
+
+new_lst_1 = list(str(str1))
+
+# print(list(str(str1)))
+
+new_lst_2 = list(map(int, new_lst_1))
+print(new_lst_2)
 button_dict = {}
 label_dict = {}
 
+button = []
+
 
 def callback_function(func_var):
-    update_btn_text()
+    button_place()
     print('Pressed:', func_var)
 
 
-for index, dat in enumerate(sensor_no):
-    button = Button(root, text=dat, bg="red", fg="white", command=lambda dat=dat: callback_function(dat))
-    button.grid(row=index + 1, column=1, pady=0, padx=0)
-    button_dict[dat] = button  # Stores a reference to the button under
-    # the name from the database
-    label = Label(root, text="dat", bg="black", fg="blue")
-    label.grid(row=do_popup_x, column=do_popup_y, pady=1, padx=1)
-    label_dict[dat] = label
-    button.bind("<Button-1>", drag_start)
-    button.bind("<B1-Motion>", drag_motion)
-    label.bind("<Button-1>", drag_start)
-    label.bind("<B1-Motion>", drag_motion)
+for i in range(len(new_lst_2)):  # this just popultes a list as a replacement for your actual inputs for troubleshooting purposes
 
-for name in sensor_no:
-    print(name, button_dict[name])  # prints all button/name associations
-    print(name, label_dict[name])
+    for index, dat, in enumerate(sensor_no):
+        button.append(Button(root, text=dat, bg="red", fg="white", command=lambda dat=dat: callback_function(dat)))
+        button[i].pack()
+        button_dict[dat] = button[i]  # Stores a reference to the button under
+        # the name from the database
+
+        # label_dict[dat] = label
+        button[i].bind("<Button-1>", drag_start)
+        button[i].bind("<B1-Motion>", drag_motion)
+        print(button[i])
+
+# for name in sensor_no:
+#     print(name, button_dict[name])  # prints all button/name associations
+#     # print(name, label_dict[name])
 
 # get_mongo()
 root.mainloop()
