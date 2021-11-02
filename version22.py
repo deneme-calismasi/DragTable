@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import pymongo
 import random
+from functools import partial
 
 
 def get_mongo():
@@ -43,7 +44,7 @@ def do_popup_y():
     return y
 
 
-def button_place():
+def label_place():
     label[i].place(x=(do_popup_x() + 10), y=(do_popup_y() - 65))
 
 
@@ -79,15 +80,14 @@ label = []
 
 
 def callback_function(func_var):
-    button_place()
+    label_place()
     print('Pressed:', func_var)
 
 
 for i in range(len(new_lst_2)):
 
     for index, dat, in enumerate(sensor_no):
-        button.append(
-            Button(root, text=dat, bg="red", fg="white", command=lambda dat=dat: callback_function(dat)))
+        button.append(Button(root, text=dat, bg="red", fg="white", command=lambda dat=dat: callback_function(dat)))
         button[i].pack()
 
         label.append(Label(root, text=random_func(), bg="black", fg="blue"))
@@ -95,6 +95,8 @@ for i in range(len(new_lst_2)):
 
         button[i].bind("<Button-1>", drag_start)
         button[i].bind("<B1-Motion>", drag_motion)
+        label[i].bind("<Button-1>", drag_start)
+        label[i].bind("<B1-Motion>", drag_motion)
         print(button[i])
 
 root.mainloop()
